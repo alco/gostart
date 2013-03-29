@@ -1,3 +1,11 @@
+## Table of contents ##
+
+[Motivation](#motivation)  
+[The canonical coding in go](#canonical)  
+[Writing Go code FAQ](#faq)  
+[Problem's with the current go way](#problems)  
+
+<a name="motivation"/>
 ## Motivation ##
 
 Dealing with packages in Go is done in a straightforward way, somewhat.
@@ -12,6 +20,7 @@ In this article I'm going to explain the go way from the outsider's point of vie
 
   [1]: http://golang.org/doc/code.html
 
+<a name="canonical"/>
 ## The canonical coding in Go ##
 
 1. **Go tool is only compatible with the code that resides in your workspace.** This is a general rule. There is an exception for the simplest case, when you'd like to build a single file that has no remote imports (imports only packages from the standard distribution). But once you start writing your own packages or importing remote packages, go tool won't work well for you unless all of your code resides in workspace.
@@ -47,6 +56,7 @@ func main() {
 }
 ```
 
+<a name="faq"/>
 ## Writing Go code FAQ ##
 * [How do I start writing Go code?](#faq1)
 * [I've written some code. How do I run it?](#faq2)
@@ -310,7 +320,8 @@ Workarounds are possible for particular cases and those can be provided by a 3rd
 <a name="faq13"/>
 ### What if I don't want to use code hosting domains in my import paths? ###
 
-## Problem's with the current go way ##
+<a name="problems"/>
+## Problems with the current go way ##
 
 As mentioned before:
 

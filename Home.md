@@ -295,6 +295,7 @@ Sure, but you'll need to provided an alias during import so that the package's n
 
 ```
 import chef "github.com/user/chef"
+```
 
 <a name="faq11"/>
 ### Package naming and file naming ###

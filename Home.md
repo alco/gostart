@@ -1,9 +1,22 @@
 ## Table of contents ##
 
-[Motivation](#motivation)  
-[The canonical coding in go](#canonical)  
-[Writing Go code FAQ](#faq)  
-[Problem's with the current go way](#problems)  
+* [Motivation](#motivation)  
+* [The canonical coding in go](#canonical)  
+* [Writing Go code FAQ](#faq)
+  * [How do I start writing Go code?](#faq1)
+  * [I've written some code. How do I run it?](#faq2)
+  * [How do I split my main package into multiple files?](#faq3)
+  * [How do I split my main package into multiple subpackages?](#faq4)
+  * [How do I write packages for others to use (i.e. a non-main package)?](#faq5)
+  * [How do I set up multiple workspaces?](#faq6)
+  * [Can I create a package outside of GOPATH?](#faq7)
+  * [How do I download remote packages?](#faq8)
+  * [How do I distinguish between library packages and main packages?](#faq9)
+  * [Can I import commands in my code?](#faq10)
+  * [Package naming and file naming](#faq11)
+  * [What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
+  * [What if I don't want to use code hosting domains in my import paths?](#faq13)
+* [Problems with the current go way](#problems)  
 
 <a name="motivation"/>
 ## Motivation ##
@@ -58,19 +71,6 @@ func main() {
 
 <a name="faq"/>
 ## Writing Go code FAQ ##
-* [How do I start writing Go code?](#faq1)
-* [I've written some code. How do I run it?](#faq2)
-* [How do I split my main package into multiple files?](#faq3)
-* [How do I split my main package into multiple subpackages?](#faq4)
-* [How do I write packages for others to use (i.e. a non-main package)?](#faq5)
-* [How do I set up multiple workspaces?](#faq6)
-* [Can I create a package outside of GOPATH?](#faq7)
-* [How do I download remote packages?](#faq8)
-* [How do I distinguish between library packages and main packages?](#faq9)
-* [Can I import commands in my code?](#faq10)
-* [Package naming and file naming](#faq11)
-* [What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
-* [What if I don't want to use code hosting domains in my import paths?](#faq13)
 
 <a name="faq1"/>
 ### How do I start writing Go code? ###

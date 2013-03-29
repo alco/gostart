@@ -52,6 +52,21 @@ func main() {
 
 ## Writing Go code FAQ ##
 
+[How do I start writing Go code?](#faq1)
+[I've written some code. How do I run it?](#faq2)
+[How do I split my main package into multiple files?](#faq3)
+[How do I split my main package into multiple subpackages?](#faq4)
+[How do I write packages for others to use (i.e. a non-main package)?](#faq5)
+[How do I set up multiple workspaces?](#faq6)
+[Can I create a package outside of GOPATH?](#faq7)
+[How do I download remote packages?](#faq8)
+[How do I distinguish between library packages and main packages?](#faq9)
+[Can I import commands in my code?](#faq10)
+[Package naming and file naming](#faq11)
+[What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
+[What if I don't want to use code hosting domains in my import paths?](#faq13)
+
+<a name="faq1"/>
 ### How do I start writing Go code? ###
 
 Before you start any coding, you should pick a directory that will become your Go workspace. All your Go code will reside there. Set the `GOPATH` environment variable to the path to that directory in your .bashrc or similar file for your shell.
@@ -76,6 +91,7 @@ Each of the subdirectories inside `src` represents a separate package or a comma
 For more information about GOPATH and workspace directory structure, run `go help gopath`.
 
 
+<a name="faq2"/>
 ### I've written some code. How do I run it? ###
 
 Navigate to your package's directory and use the go tool to build and run your code.
@@ -116,6 +132,7 @@ You can also define packages with other names, those are simply called packages.
 See also: `go help build`, `go help install`.
 
 
+<a name="faq3"/>
 ### How do I split my main package into multiple files? ###
 
 Go treats files in a single directory as belonging to one package as long as they all have the same name in their `package` declarations.
@@ -158,6 +175,7 @@ Private (non-exported) functions and data are accessible in all files that belon
 The main package allows only one main function to be defined, so you'll need to choose one single file from your main package to put it in.
 
 
+<a name="faq4"/>
 ### How do I split my main package into multiple subpackages? ###
 
 Subpackages are just separate packages that happen to reside in another package's subdirectory. Go doesn't treat them in any special way, so import paths for subpackages are relative to your `$GOPATH/src`. Use subpackages only their functionality is tied to the main package which contains then and when it doesn't make sense to put that package on one level with other top-level packages.
@@ -195,6 +213,7 @@ Hello world! My lucky number is 50
 Note that if you were to replace `package math` in math.go with `package main`, this would not make math.go part of the same main package that both main.go and helper.go belong to. It would be treated as another main package and you would get an error when trying to run or import it because it doesn't define a main function.
 
 
+<a name="faq5"/>
 ### How do I write packages for others to use (i.e. a non-main package)? ###
 
 In the previous questions we were looking at writing Go's so called commands — packages that declare `package main` and are meant to be built to produce an executable binary.
@@ -232,16 +251,19 @@ In the context of a simple (non-main) package, `go build` is used to verify that
 
 In our util package, there are two exported functions (Square and Circle) and one private function (cube). The provide function is only visible in files that are part of the package. Other packages can only call exported functions.
 
+<a name="faq6"/>
 ### How do I set up multiple workspaces? ###
 
 Short answer — you don't. Go tool does expect you to work in a single workspace. Even if you add two paths to your GOPATH, go get will always download new packages into the first path.
 
 Using two workspaces can be only sometimes marginally useful when GOPATH is updated automatically and temporarilly by some kind of project management tool.
 
+<a name="faq7"/>
 ### Can I create a package outside of GOPATH? ###
 
 No. And there is no easy workaround either. You'll need to modify Go's toolchain to achieve that.
 
+<a name="faq8"/>
 ### How do I download remote packages? ###
 
 To get all dependencies for the current package:
@@ -265,10 +287,12 @@ All downloaded packages end up in $GOPATH/src. They are also automatically built
 go get -d github.com/user/package
 ```
 
+<a name="faq9"/>
 ### How do I distinguish between library packages and main packages? ###
 
 They live side by side in your src directory, so there's no distinction in file system. There is a convention to call the former ones simply packages and the latter ones commands. So, if your package's first line reads `package main`, it's a command. Otherwise, it's just called a package.
 
+<a name="faq10"/>
 ### Can I import commands in my code? ###
 
 Sure, but you'll need to provided an alias during import so that the package's name is not main.
@@ -276,14 +300,17 @@ Sure, but you'll need to provided an alias during import so that the package's n
 ```
 import chef "github.com/user/chef"
 
+<a name="faq11"/>
 ### Package naming and file naming ###
 
+<a name="faq12"/>
 ### What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###
 
 If you're not going to import anything outside of standard library or have one level of local imports, then it'll work for you with the go tool as it current is. If, however, you need to use fully qualified imports, you have to move your code to Go workspace.
 
 Workarounds are possible for particular cases and those can be provided by a 3rd party tool. In general, however, you have to stick to Go's conventions to make it work for you.
 
+<a name="faq13"/>
 ### What if I don't want to use code hosting domains in my import paths? ###
 
 ## Problem's with the current go way ##

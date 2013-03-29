@@ -2,6 +2,7 @@
 
 * [Motivation](#motivation)
 * [The canonical coding in go](#canonical)
+* [Problems with the current go way](#problems)
 * [Writing Go code FAQ](#faq)
   * [How do I start writing Go code?](#faq1)
   * [I've written some code. How do I run it?](#faq2)
@@ -16,7 +17,6 @@
   * [Package naming and file naming](#faq11)
   * [What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
   * [What if I don't want to use code hosting domains in my import paths?](#faq13)
-* [Problems with the current go way](#problems)
 
 <a name="motivation"/>
 ## Motivation ##
@@ -67,6 +67,22 @@ func main() {
     sub.ExportedFunction()
 }
 ```
+
+
+<a name="problems"/>
+## Problems with the current go way ##
+
+As mentioned before:
+
+  * no freedom to write go code anywhere on your file system
+  * no support for setting up a reproducible dev environment or packaging app locally set up environment
+  * no support for managing dependency versions
+  * URL-ish imports in your code. This is a feature, in fact, but it's rather opinionated.
+
+So, this is the go way. There's nothing wrong with it choosing certain conventions and forcing them on its users. However, even with those conventions there are going to be problems when theory meets practice, it's better to have remedy for that than not.
+
+I'm not advocating changing the go way in any way, but there certainly exists justification for a 3rd party tool that provides more flexible workflow, automates mandane tasks that are inevitable in practice and solves some of the problems with go's approach.
+
 
 <a name="faq"/>
 ## Writing Go code FAQ ##
@@ -318,17 +334,3 @@ Workarounds are possible for particular cases and those can be provided by a 3rd
 
 <a name="faq13"/>
 ### What if I don't want to use code hosting domains in my import paths? ###
-
-<a name="problems"/>
-## Problems with the current go way ##
-
-As mentioned before:
-
-  * no freedom to write go code anywhere on your file system
-  * no support for setting up a reproducible dev environment or packaging app locally set up environment
-  * no support for managing dependency versions
-  * URL-ish imports in your code. This is a feature, in fact, but it's rather opinionated.
-
-So, this is the go way. There's nothing wrong with it choosing certain conventions and forcing them on its users. However, even with those conventions there are going to be problems when theory meets practice, it's better to have remedy for that than not.
-
-I'm not advocating changing the go way in any way, but there certainly exists justification for a 3rd party tool that provides more flexible workflow, automates mandane tasks that are inevitable in practice and solves some of the problems with go's approach.

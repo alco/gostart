@@ -1,7 +1,7 @@
 ## Table of contents ##
 
-* [Motivation](#motivation)  
-* [The canonical coding in go](#canonical)  
+* [Motivation](#motivation)
+* [The canonical coding in go](#canonical)
 * [Writing Go code FAQ](#faq)
   * [How do I start writing Go code?](#faq1)
   * [I've written some code. How do I run it?](#faq2)
@@ -16,22 +16,21 @@
   * [Package naming and file naming](#faq11)
   * [What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
   * [What if I don't want to use code hosting domains in my import paths?](#faq13)
-* [Problems with the current go way](#problems)  
+* [Problems with the current go way](#problems)
 
 <a name="motivation"/>
 ## Motivation ##
 
-Dealing with packages in Go is done in a straightforward way, somewhat.
+The **go tool** is bundled with Go distribution by default and it's convenient for automating common tasks such as getting dependencies, building, and testing your code. It's easy to use and provides a consistent command-line interface, but it also enforces a set of strict conventions that introduce a slight learning curve for some and require a bit of getting used to.
 
-The **go tool** is bundled with Go distribution by default and it's convenient for automating common tasks such as getting dependencies, building, and testing your code. It's easy to use and provides a consistent command-line interface, but it also enforces a set of strict conventions that introduce a slight learning curve for some and require some getting used to.
+While the conventions imposed by go tool might seem natural for a hardcore gopher, it takes effort for a newcomer to get up to speed with it. If you hit a wall trying to make it work for you and ask for help on #go-nuts channel or [golang-nuts group][2] showing your code layout and error messages `go get` or `go build` produces, you will most likely be told to first learn how to use go tool properly before you start coding in Go. Its documentation is actually pretty good, but it's not easy to absorb it all at once. Discovering tricks one at a time is more viable approach to learning for me, and it has been easy to pull this off with Go.difficult to If you ask where to learn more about its usage, you'll be directed to this short  and possibly previous discussions on the list.
 
-Its conventions might seem very intuitive and logical for a hardcore gopher, but it takes effort for a newcomer to get up to speed with it. If you bring this topic up on #go-nuts or golang-nuts group and show your code layout and error messages go get or go build produces, you will most likely be told to first learn how to use go tool before you start coding in Go. If you ask where to learn more about its usage, you'll be directed to this short [article][1] and possibly previous discussions on the list.
+My experience was such that neither the recommended [initial reading][1], nor discussions on the mailing list cleared up the picture for me. I was only able to eventually learn the go way by gathering tidbits from the net, through experimentation, and looking at the go tool's source code.
 
-My experience was such that neither the article, nor discussions on the mailing list provided a complete explanation I was looking for. I was only able to eventually learn the go way by experimentation and looking at the go tool's source code.
-
-In this article I'm going to explain the go way from the outsider's point of view. Assuming you're likely to stumble into the same problems I had, this guide should answer your questions and help you understand go tool's conventions. There is also a FAQ whith code samples below, following the initial introductory section.
+In this article I'm going to explain the go way from an outsider's point of view. Assuming you're likely to stumble into the same problems I had, this guide should answer your questions and help you understand go tool's conventions. There is also a FAQ with code samples, you might want to jump straight to it.
 
   [1]: http://golang.org/doc/code.html
+  [2]: http://groups.google.com/group/golang-nuts
 
 <a name="canonical"/>
 ## The canonical coding in Go ##

@@ -22,34 +22,36 @@ This document assumes Go version 1.0.3.
 <a name="motivation"/>
 ## Motivation ##
 
-The **go tool** is bundled with Go distribution by default and it's convenient for automating common tasks such as getting dependencies, building, and testing your code. It's easy to use and provides a consistent command-line interface, but it also enforces a set of strict conventions that introduce a slight learning curve for some and require a bit of getting used to.
+The **go tool** is bundled with Go distribution by default and it's convenient for automating common tasks such as getting dependencies, building, and testing your code. It's easy to use and provides a consistent command-line interface and it also expects you to respect a bunch of conventions, some of which I find peculiar and think they introduce a slight learning curve for some users and require a bit of getting used to.
 
 While the conventions imposed by go tool might seem natural for a hardcore gopher, it takes effort for a newcomer to get up to speed with it. If you hit a wall trying to make it work for you and ask for help on #go-nuts channel or [golang-nuts group][2] showing your code layout and error messages `go get` or `go build` produces, you will most likely be told to first learn how to use go tool properly before you start coding in Go. Its documentation is actually pretty good, but it's not easy to absorb it all at once.
 
-My experience was such that neither the recommended [initial reading][1], nor discussions on the mailing list cleared up the picture completely for me. I was only able to eventually learn the go way by gathering tidbits from the net, through experimentation, and by looking at the go tool's source code.
+My experience was such that neither the recommended [initial reading][1], nor discussions on the mailing list cleared up the picture completely for me. I was only able to eventually grasp the go way by gathering tidbits from the net, through experimentation, and by looking at the go tool's source code.
 
-In this article I'm going to explain the go way from an outsider's point of view. Assuming you're likely to stumble into the same problems I had, this guide should answer your questions and help you understand go tool's conventions. There is also a FAQ with code samples at the bottom.
+In this article I'm going to explain the go way from an outsider's point of view. Assuming you're likely to encounter similar hurdles along your way, this guide should answer your questions and help you understand go tool's conventions. There is also a FAQ with code samples at the bottom.
 
 <a name="canonical"/>
 ## The Go way ##
 
-### 1. Go tool is only compatible with code that resides in your workspace
+Here are some fundamentals you need to be aware of when using go tool.
+
+### 1. Go tool is only compatible with code that resides in a workspace
 
 This is the fundamental rule of writing Go code. There are some exceptions that apply to little programs and throw-away code, but in general everything you write in Go will reside in your workspace. So what is a workspace?
 
-A workspace is a directory in your file system a path to which is stored in the environment variable `GOPATH`. This directory has a certain structure, in the most basic terms it should have one subdirectory named `src`. Within the latter you create new subdirectories, one for each separate Go package.
+A workspace is a directory in your file system, the path to which is stored in the environment variable `GOPATH`. This directory has a certain structure, in the most basic terms it should have one subdirectory named `src`. Within the latter you create new subdirectories, one for each separate Go package.
 
-This is described in more detail in the aforemention [article][1] and in the FAQ near the end of the present article. To keep it simple, always create a new directory inside $GOPATH/src when you're starting a new Go project.
+This is described in more detail in the aforementioned [article][1] and in the FAQ near the end of the present document. To keep it simple, always create a new directory inside $GOPATH/src when you're starting a new Go project.
 
 ### 2. Go tool does not allow you to depend on specific versions of external packages
 
-If you really need to have a specific version of a certain package, you'll need to fork that package and check it out at the specific version you desire. If you need to use different versions for different packages, you'll need to create a separate fork for each of the versions.
+If you really need to have a specific version of a certain package, you'll need to fork that package and check it out at the specific version you desire. If you need to use different versions of a single package, you'll need to create a separate fork for each version.
 
-Obviously, this approach doesn't scale and quickly gets tedious once you need more than one version of any given package. Go's reasoning behind this is that versioning is so damn hard that your dependcies should better all be working for you at their latest versions and also at the latest versions of their respective dependencies, and so on recursively. While this is a somewhat good advice, it is generally not possible to adhere to it in practice. You _will_ need to depend on specific versions of your immediate dependencies or dependencies of your dependencies, etc.
+Obviously, this approach doesn't scale and gets tedious once you need more than one version of any given package. Go's reasoning behind this is that versioning is so damn hard that your dependencies should better all be working for you at their latest versions and also at the latest versions of their respective dependencies, and so on recursively. While this is a sound advice, it is generally not possible to adhere to it in practice. You _will_ need to depend on specific versions of your immediate dependencies or dependencies of your dependencies, etc.
 
 In a nutshell, don't try to emulate versioning with go tool, it just doesn't play well with it.
 
-### 3. Go tool forces you to use remote imports and always build import paths from the package root
+### 3. When working with Go tool, use fully qualified imports and always build import paths from $GOPATH
 
 There is no such thing as local packages in Go. While local imports are possible to some extent, they're meant more for the Go devs themselves than for Go users.
 
@@ -92,7 +94,7 @@ Go tool let's you download remote packages either by passing their import path t
 go get codehosting.com/path/to/package
 ```
 
-The source for the downloaded package will end up in `$GOPATH/src/codehosting.com/path/to/package`. Go tool will also automatically build a static lib and put it in `$GOPATH/pkg/...`. To read more about this, run `go help get` and `go help gopath`.
+The source for the downloaded package will end up in `$GOPATH/src/codehosting.com/path/to/package`. Go tool will also automatically build a static lib and put it in `$GOPATH/pkg/...`. To read more about this, run `go help get` and `go help gopath`. Also, see [question 8](#faq8).
 
   [1]: http://golang.org/doc/code.html
   [2]: http://groups.google.com/group/golang-nuts
@@ -101,18 +103,16 @@ The source for the downloaded package will end up in `$GOPATH/src/codehosting.co
 <a name="problems"/>
 ## Problems with the current Go way ##
 
-As much as I would like to say that go tool keeps it all simple and keeps you away from getting into trouble, the reality proves otherwise. So far, I can come up with the following list of issues that might cause problems for some users:
+As much as I would like to say that go tool keeps it all simple and keeps you from getting into trouble, the reality proves otherwise. So far, I can come up with the following list of issues that might cause problems for some users:
 
-  * no freedom to write go code anywhere on your file system
+  * no freedom to write go code anywhere in your file system
   * no support for setting up a reproducible dev environment or packaging a locally set up environment
   * no support for managing dependency versions
   * URL-ish imports in your code
 
 To elaborate a bit on the second point, go tool does not provide any way to create a reproducible environment for fool-proof deployments. If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment. The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment. Again, this will have to be done manually. You might find [goven][3] useful in this case.
 
-So, this is the go way. There's nothing wrong with it choosing certain conventions and forcing them on its users. But it's important to admit that pretending the problems listed above don't exist will not make them go away. Those problems might not be relevant for all users, but certain groups of users will definitely find them irritating.
-
-I'm not advocating changing the go way in any way, but there certainly exists justification for a 3rd party tool that would provide more flexible workflow, automate mundane tasks that are inevitable in practice and solve some of the problems with Go's current approach.
+So, this is the go way. I'm not advocating to change it in any way, but there certainly exists justification for a 3rd party tool that would provide more flexible workflow, automate mundane tasks that are inevitable in practice and solve some of the problems that go tool wasn't designed to deal with.
 
   [3]: https://github.com/kr/goven
 

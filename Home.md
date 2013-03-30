@@ -16,9 +16,8 @@ This document assumes Go version 1.0.3.
   * [8. How do I download remote packages?](#faq8)
   * [9. How do I distinguish between library packages and main packages?](#faq9)
   * [10. Can I import commands in my code?](#faq10)
-  * [11. Correspondence between packages and files](#faq11)
-  * [12. What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
-  * [13. What if I don't want to use code hosting domains in my import paths?](#faq13)
+  * [11. What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq11)
+  * [12. What if I don't want to use code hosting domains in my import paths?](#faq12)
 
 <a name="motivation"/>
 ## Motivation ##
@@ -187,7 +186,7 @@ See also: `go help build`, `go help install`.
 
 
 <a name="faq3"/>
-### 3. How do I split my main package into multiple files? ###
+### 3. How do I split my package into multiple files? ###
 
 Go treats files in a single directory as belonging to one package as long as they all have the same name in their `package` declarations.
 
@@ -227,6 +226,8 @@ Hello world! My lucky number is 25
 Private (non-exported) functions and data are accessible in all files that belong to a single package.
 
 The main package allows only one main function to be defined, so you'll need to choose one single file from your main package to put it in.
+
+Finally, all of this applies to any other package other than main. Go's standard packages use this ability pervasively.
 
 
 <a name="faq4"/>
@@ -356,17 +357,14 @@ import chef "github.com/user/chef"
 ```
 
 <a name="faq11"/>
-### 11. Correspondence between packages and files ###
-
-<a name="faq12"/>
-### 12. What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###
+### 11. What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###
 
 If you're not going to import anything outside of standard library or have one level of local imports, then it'll work for you with the go tool as it current is. If, however, you need to use fully qualified imports, you have to move your code to Go workspace.
 
 Workarounds are possible for particular cases and those can be provided by a 3rd party tool. In general, however, you have to stick to Go's conventions to make it work for you.
 
-<a name="faq13"/>
-### 13. What if I don't want to use code hosting domains in my import paths? ###
+<a name="faq12"/>
+### 12. What if I don't want to use code hosting domains in my import paths? ###
 
 You can move stuff around inside `$GOPATH/src` after `go get` has downloaded your dependecies. This would against the Go way though. Also, currently, the only way to distinguish other people's packages from your own is by looking at the directory structure inside your `$GOPATH/src`: remote packages will reside in one of the directories like _github.com_ and _code.google.com_.
 

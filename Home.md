@@ -1,16 +1,16 @@
 ## Table of contents ##
 
 * [Motivation](#motivation)
-* [The canonical coding in go](#canonical)
-* [Problems with the current go way](#problems)
-* [Writing Go code FAQ](#faq)
+* [The Go way](#canonical)
+* [Problems with the current Go way](#problems)
+* [FAQ](#faq)
   * [How do I start writing Go code?](#faq1)
   * [I've written some code. How do I run it?](#faq2)
   * [How do I split my main package into multiple files?](#faq3)
   * [How do I split my main package into multiple subpackages?](#faq4)
   * [How do I write packages for others to use (i.e. a non-main package)?](#faq5)
   * [How do I set up multiple workspaces?](#faq6)
-  * [Can I create a package outside of GOPATH?](#faq7)
+  * [Can I create a package outside of $GOPATH?](#faq7)
   * [How do I download remote packages?](#faq8)
   * [How do I distinguish between library packages and main packages?](#faq9)
   * [Can I import commands in my code?](#faq10)
@@ -23,29 +23,35 @@
 
 The **go tool** is bundled with Go distribution by default and it's convenient for automating common tasks such as getting dependencies, building, and testing your code. It's easy to use and provides a consistent command-line interface, but it also enforces a set of strict conventions that introduce a slight learning curve for some and require a bit of getting used to.
 
-While the conventions imposed by go tool might seem natural for a hardcore gopher, it takes effort for a newcomer to get up to speed with it. If you hit a wall trying to make it work for you and ask for help on #go-nuts channel or [golang-nuts group][2] showing your code layout and error messages `go get` or `go build` produces, you will most likely be told to first learn how to use go tool properly before you start coding in Go. Its documentation is actually pretty good, but it's not easy to absorb it all at once. Discovering tricks one at a time is more viable approach to learning for me, and it has been easy to pull this off with Go.difficult to If you ask where to learn more about its usage, you'll be directed to this short  and possibly previous discussions on the list.
+While the conventions imposed by go tool might seem natural for a hardcore gopher, it takes effort for a newcomer to get up to speed with it. If you hit a wall trying to make it work for you and ask for help on #go-nuts channel or [golang-nuts group][2] showing your code layout and error messages `go get` or `go build` produces, you will most likely be told to first learn how to use go tool properly before you start coding in Go. Its documentation is actually pretty good, but it's not easy to absorb it all at once.
 
-My experience was such that neither the recommended [initial reading][1], nor discussions on the mailing list cleared up the picture for me. I was only able to eventually learn the go way by gathering tidbits from the net, through experimentation, and looking at the go tool's source code.
+My experience was such that neither the recommended [initial reading][1], nor discussions on the mailing list cleared up the picture completely for me. I was only able to eventually learn the go way by gathering tidbits from the net, through experimentation, and by looking at the go tool's source code.
 
-In this article I'm going to explain the go way from an outsider's point of view. Assuming you're likely to stumble into the same problems I had, this guide should answer your questions and help you understand go tool's conventions. There is also a FAQ with code samples, you might want to jump straight to it.
+In this article I'm going to explain the go way from an outsider's point of view. Assuming you're likely to stumble into the same problems I had, this guide should answer your questions and help you understand go tool's conventions. There is also a FAQ with code samples at the bottom.
 
   [1]: http://golang.org/doc/code.html
   [2]: http://groups.google.com/group/golang-nuts
 
 <a name="canonical"/>
-## The canonical coding in Go ##
+## The Go way ##
 
-1. **Go tool is only compatible with the code that resides in your workspace.** This is a general rule. There is an exception for the simplest case, when you'd like to build a single file that has no remote imports (imports only packages from the standard distribution). But once you start writing your own packages or importing remote packages, go tool won't work well for you unless all of your code resides in workspace.
+### 1. Go tool is only compatible with the code that resides in your workspace
+
+This is a general rule. There is an exception for the simplest case, when you'd like to build a single file that has no remote imports (imports only packages from the standard distribution). But once you start writing your own packages or importing remote packages, go tool won't work well for you unless all of your code resides in workspace.
 
 So let's take a closer look at workspaces and find out what they'r all about.
 
-2. **Go tool does not allow you to depend on specific versions of external packages.** If you really need to have a specific version of a certain package, you'll need to fork that package and check it out at the specific version you desire. If you need to use different versions for different packages, you'll need to create a separate fork for each of the versions.
+### 2. Go tool does not allow you to depend on specific versions of external packages
+
+If you really need to have a specific version of a certain package, you'll need to fork that package and check it out at the specific version you desire. If you need to use different versions for different packages, you'll need to create a separate fork for each of the versions.
 
 Obviously, this approach doesn't scale and quickly gets tedious once you need more than one version of any given package. Go's reasoning behind this is that versioning is damn hard, so you should keep your dependencies at the bleeding edge and depend on as little specific version is possible. While this is a good advice, it doesn't stand the test of reality. In practice, you _will_ need to depend on specific versions. The reasons are countless: private svn repo, private own repo, etc.
 
 On other issue with this is that go tool does not provide any way to create a reproducible development environment. If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependency might introduce a breaking change during the time period between your testing and deployment. The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment. Again, this will have to be done manually.
 
-3. **Go tool forces you to use remote imports and always build imports paths from the package root.** There is no such thing as local packages in Go. While local imports are supported, they're not documented and are discouraged from use. Anything you import is relative to your $GOPATH/src. Thus, if you have a directory structure like the following one:
+### 3. Go tool forces you to use remote imports and always build imports paths from the package root
+
+There is no such thing as local packages in Go. While local imports are supported, they're not documented and are discouraged from use. Anything you import is relative to your $GOPATH/src. Thus, if you have a directory structure like the following one:
 
 ```
 .
@@ -70,7 +76,7 @@ func main() {
 
 
 <a name="problems"/>
-## Problems with the current go way ##
+## Problems with the current Go way ##
 
 As mentioned before:
 
@@ -85,7 +91,7 @@ I'm not advocating changing the go way in any way, but there certainly exists ju
 
 
 <a name="faq"/>
-## Writing Go code FAQ ##
+## FAQ ##
 
 <a name="faq1"/>
 ### How do I start writing Go code? ###
@@ -280,7 +286,7 @@ Short answer — you don't. Go tool does expect you to work in a single workspac
 Using two workspaces can be only sometimes marginally useful when GOPATH is updated automatically and temporarilly by some kind of project management tool.
 
 <a name="faq7"/>
-### Can I create a package outside of GOPATH? ###
+### Can I create a package outside of $GOPATH? ###
 
 No. And there is no easy workaround either. You'll need to modify Go's toolchain to achieve that.
 

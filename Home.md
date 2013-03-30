@@ -88,7 +88,7 @@ func main() {
 }
 ```
 
-Go tool let's you download remote packages either by passing their import path to `go get` or calling `go get ./...` inside your project's dir to recursively get all remote dependencies.
+Go tool let's you download remote packages either by passing their import path to `go get` or calling `go get ./...` inside your project's directory to recursively get all remote dependencies.
 
 ```shell
 go get codehosting.com/path/to/package
@@ -106,9 +106,9 @@ The source for the downloaded package will end up in `$GOPATH/src/codehosting.co
 As much as I would like to say that go tool keeps it all simple and keeps you from getting into trouble, the reality proves otherwise. So far, I can come up with the following list of issues that might cause problems for some users:
 
   * no freedom to write go code anywhere in your file system
-  * no support for setting up a reproducible dev environment or packaging a locally set up environment
+  * no support for setting up a reproducible development environment or packaging a locally set up environment
   * no support for managing dependency versions
-  * URL-ish imports in your code
+  * URL-ish looking imports in your code
 
 To elaborate a bit on the second point, go tool does not provide any way to create a reproducible environment for fool-proof deployments. If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment. The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment. Again, this will have to be done manually. You might find [goven][3] useful in this case.
 
@@ -273,7 +273,7 @@ Note that if you were to replace `package math` in math.go with `package main`, 
 
 In the previous questions we were looking at writing Go's so called commands — packages that declare `package main` and are meant to be built to produce an executable binary.
 
-The other flavor of Go packages is used as libraries or modules in other languages, you can't build them into an executable. Their purpose is to be imported into another package (not necesarilly main package) to provide useful functionality to that package.
+The other flavor of Go packages is used as libraries or modules in other languages, you can't build them into an executable. Their purpose is to be imported into another package (not necessarily main package) to provide useful functionality to that package.
 
 You create a package the same way as you would create a command. The only difference is that instead of `package main` you write `package <some other name>`. All other rules described in previous questions apply to these packages as well: you may split one package into multiple files, but all files belonging to a package reside in a single directory.
 
@@ -311,7 +311,7 @@ In our util package, there are two exported functions (Square and Circle) and on
 
 Short answer — you don't. Go tool does expect you to work in a single workspace. Even if you add two paths to your GOPATH, go get will always download new packages into the first location listed in GOPATH.
 
-Using two workspaces can sometimes be marginally useful when GOPATH is updated automatically and temporarilly by some kind of project management/build tool. See [question 13](#faq13) for one use case of using multiple workspaces.
+Using two workspaces can sometimes be marginally useful when GOPATH is updated automatically and temporarily by some kind of project management/build tool. See [question 13](#faq13) for one use case of using multiple workspaces.
 
 <a name="faq7"/>
 ### 7. Can I create a package outside of $GOPATH? ###
@@ -366,6 +366,6 @@ Workarounds are possible for particular cases and those can be provided by a 3rd
 <a name="faq12"/>
 ### 12. What if I don't want to use code hosting domains in my import paths? ###
 
-You can move stuff around inside `$GOPATH/src` after `go get` has downloaded your dependecies. This would against the Go way though. Also, currently, the only way to distinguish other people's packages from your own is by looking at the directory structure inside your `$GOPATH/src`: remote packages will reside in one of the directories like _github.com_ and _code.google.com_.
+You can move stuff around inside `$GOPATH/src` after `go get` has downloaded your dependencies. This would against the Go way though. Also, currently, the only way to distinguish other people's packages from your own is by looking at the directory structure inside your `$GOPATH/src`: remote packages will reside in one of the directories like _github.com_ and _code.google.com_.
 
 Keeping remote packages in another directory, separate from your own packages, would certainly be great. And it can be emulated by specifying more than one path in GOPATH.

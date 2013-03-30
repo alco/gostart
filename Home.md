@@ -6,19 +6,19 @@ This document assumes Go version 1.0.3.
 * [The Go way](#canonical)
 * [Problems with the current Go way](#problems)
 * [FAQ](#faq)
-  * [How do I start writing Go code?](#faq1)
-  * [I've written some code. How do I run it?](#faq2)
-  * [How do I split my main package into multiple files?](#faq3)
-  * [How do I split my main package into multiple subpackages?](#faq4)
-  * [How do I write packages for others to use (i.e. a non-main package)?](#faq5)
-  * [How do I set up multiple workspaces?](#faq6)
-  * [Can I create a package outside of $GOPATH?](#faq7)
-  * [How do I download remote packages?](#faq8)
-  * [How do I distinguish between library packages and main packages?](#faq9)
-  * [Can I import commands in my code?](#faq10)
-  * [Package naming and file naming](#faq11)
-  * [What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
-  * [What if I don't want to use code hosting domains in my import paths?](#faq13)
+  * [1. How do I start writing Go code?](#faq1)
+  * [2. I've written some code. How do I run it?](#faq2)
+  * [3. How do I split my main package into multiple files?](#faq3)
+  * [4. How do I split my main package into multiple subpackages?](#faq4)
+  * [5. How do I write packages for others to use (i.e. a non-main package)?](#faq5)
+  * [6. How do I set up multiple workspaces?](#faq6)
+  * [7. Can I create a package outside of $GOPATH?](#faq7)
+  * [8. How do I download remote packages?](#faq8)
+  * [9. How do I distinguish between library packages and main packages?](#faq9)
+  * [10. Can I import commands in my code?](#faq10)
+  * [11. Correspondence between packages and files](#faq11)
+  * [12. What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq12)
+  * [13. What if I don't want to use code hosting domains in my import paths?](#faq13)
 
 <a name="motivation"/>
 ## Motivation ##
@@ -121,7 +121,7 @@ I'm not advocating changing the go way in any way, but there certainly exists ju
 ## FAQ ##
 
 <a name="faq1"/>
-### How do I start writing Go code? ###
+### 1. How do I start writing Go code? ###
 
 Before you start any coding, you should pick a directory that will become your Go workspace. All your Go code will reside there. Set the `GOPATH` environment variable to the path to that directory in your .bashrc or similar file for your shell.
 
@@ -146,7 +146,7 @@ For more information about GOPATH and workspace directory structure, run `go hel
 
 
 <a name="faq2"/>
-### I've written some code. How do I run it? ###
+### 2. I've written some code. How do I run it? ###
 
 Navigate to your package's directory and use the go tool to build and run your code.
 
@@ -187,7 +187,7 @@ See also: `go help build`, `go help install`.
 
 
 <a name="faq3"/>
-### How do I split my main package into multiple files? ###
+### 3. How do I split my main package into multiple files? ###
 
 Go treats files in a single directory as belonging to one package as long as they all have the same name in their `package` declarations.
 
@@ -230,7 +230,7 @@ The main package allows only one main function to be defined, so you'll need to 
 
 
 <a name="faq4"/>
-### How do I split my main package into multiple subpackages? ###
+### 4. How do I split my main package into multiple subpackages? ###
 
 Subpackages are just separate packages that happen to reside in another package's subdirectory. Go doesn't treat them in any special way, so import paths for subpackages are relative to your `$GOPATH/src`. Use subpackages only their functionality is tied to the main package which contains then and when it doesn't make sense to put that package on one level with other top-level packages.
 
@@ -268,7 +268,7 @@ Note that if you were to replace `package math` in math.go with `package main`, 
 
 
 <a name="faq5"/>
-### How do I write packages for others to use (i.e. a non-main package)? ###
+### 5. How do I write packages for others to use (i.e. a non-main package)? ###
 
 In the previous questions we were looking at writing Go's so called commands — packages that declare `package main` and are meant to be built to produce an executable binary.
 
@@ -306,19 +306,19 @@ In the context of a simple (non-main) package, `go build` is used to verify that
 In our util package, there are two exported functions (Square and Circle) and one private function (cube). The provide function is only visible in files that are part of the package. Other packages can only call exported functions.
 
 <a name="faq6"/>
-### How do I set up multiple workspaces? ###
+### 6. How do I set up multiple workspaces? ###
 
-Short answer — you don't. Go tool does expect you to work in a single workspace. Even if you add two paths to your GOPATH, go get will always download new packages into the first path.
+Short answer — you don't. Go tool does expect you to work in a single workspace. Even if you add two paths to your GOPATH, go get will always download new packages into the first location listed in GOPATH.
 
-Using two workspaces can be only sometimes marginally useful when GOPATH is updated automatically and temporarilly by some kind of project management tool.
+Using two workspaces can sometimes be marginally useful when GOPATH is updated automatically and temporarilly by some kind of project management/build tool. See [question 13](#faq13) for one use case of using multiple workspaces.
 
 <a name="faq7"/>
-### Can I create a package outside of $GOPATH? ###
+### 7. Can I create a package outside of $GOPATH? ###
 
 No. And there is no easy workaround either. You'll need to modify Go's toolchain to achieve that.
 
 <a name="faq8"/>
-### How do I download remote packages? ###
+### 8. How do I download remote packages? ###
 
 To get all dependencies for the current package:
 
@@ -342,28 +342,32 @@ go get -d github.com/user/package
 ```
 
 <a name="faq9"/>
-### How do I distinguish between library packages and main packages? ###
+### 9. How do I distinguish between library packages and main packages? ###
 
 They live side by side in your src directory, so there's no distinction in file system. There is a convention to call the former ones simply packages and the latter ones commands. So, if your package's first line reads `package main`, it's a command. Otherwise, it's just called a package.
 
 <a name="faq10"/>
-### Can I import commands in my code? ###
+### 10. Can I import commands in my code? ###
 
-Sure, but you'll need to provided an alias during import so that the package's name is not main.
+Sure, but you'll need to provide an alias during import so that the package's main function does not collide with your main function.
 
 ```go
 import chef "github.com/user/chef"
 ```
 
 <a name="faq11"/>
-### Package naming and file naming ###
+### 11. Correspondence between packages and files ###
 
 <a name="faq12"/>
-### What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###
+### 12. What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###
 
 If you're not going to import anything outside of standard library or have one level of local imports, then it'll work for you with the go tool as it current is. If, however, you need to use fully qualified imports, you have to move your code to Go workspace.
 
 Workarounds are possible for particular cases and those can be provided by a 3rd party tool. In general, however, you have to stick to Go's conventions to make it work for you.
 
 <a name="faq13"/>
-### What if I don't want to use code hosting domains in my import paths? ###
+### 13. What if I don't want to use code hosting domains in my import paths? ###
+
+You can move stuff around inside `$GOPATH/src` after `go get` has downloaded your dependecies. This would against the Go way though. Also, currently, the only way to distinguish other people's packages from your own is by looking at the directory structure inside your `$GOPATH/src`: remote packages will reside in one of the directories like _github.com_ and _code.google.com_.
+
+Keeping remote packages in another directory, separate from your own packages, would certainly be great. And it can be emulated by specifying more than one path in GOPATH.

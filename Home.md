@@ -1,3 +1,5 @@
+This document assumes Go version 1.0.3.
+
 ## Table of contents ##
 
 * [Motivation](#motivation)

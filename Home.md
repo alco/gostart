@@ -53,7 +53,7 @@ On other issue with this is that go tool does not provide any way to create a re
 
 There is no such thing as local packages in Go. While local imports are supported, they're not documented and are discouraged from use. Anything you import is relative to your $GOPATH/src. Thus, if you have a directory structure like the following one:
 
-```
+```shell
 .
 └── src
     └── gopher
@@ -64,7 +64,7 @@ There is no such thing as local packages in Go. While local imports are supporte
 
 in your main.go file you'll need to import sub as follows:
 
-```
+```go
 package main
 
 import "gopher/sub"
@@ -98,13 +98,13 @@ I'm not advocating changing the go way in any way, but there certainly exists ju
 
 Before you start any coding, you should pick a directory that will become your Go workspace. All your Go code will reside there. Set the `GOPATH` environment variable to the path to that directory in your .bashrc or similar file for your shell.
 
-```
+```shell
 export GOPATH=/Users/alco/go
 ```
 
 You'll also need to create a subdirectory named `src` inside your `$GOPATH`, this is where you'll be keeping your Go packages and commands. Here's what your initial directory structure is going to look like:
 
-```
+```shell
 $ tree -L 2 $GOPATH
 /Users/alco/go
 └── src
@@ -123,7 +123,7 @@ For more information about GOPATH and workspace directory structure, run `go hel
 
 Navigate to your package's directory and use the go tool to build and run your code.
 
-```
+```shell
 $ cd $GOPATH/src/example
 $ ls
 main.go
@@ -166,7 +166,7 @@ Go treats files in a single directory as belonging to one package as long as the
 
 Let's continue working on our example command. We'll add a second file named helper.go and define a helper function inside it.
 
-```
+```shell
 $ cd $GOPATH/src/example
 $ cat helper.go
 package main
@@ -184,7 +184,7 @@ func main() {
 
 Now we cannot simply `go run main.go` because main.go references a function defined in another file. We can either pass all files as arguments to go run or build the current package and then run the produced binary.
 
-```
+```shell
 $ go run main.go
 # command-line-arguments
 ./main.go:6: undefined: privateHelperFunc
@@ -209,7 +209,7 @@ Subpackages are just separate packages that happen to reside in another package'
 
 Let's create a subdirectory in our example project called `math` and create a file there named `math.go`.
 
-```
+```shell
 $ cat math/math.go
 package math
 
@@ -220,7 +220,7 @@ func Mul2(x int) int {
 
 Let's also edit `main.go` to call Mul2().
 
-```
+```shell
 $ cat main.go
 package main
 
@@ -251,7 +251,7 @@ You create a package the same way as you would create a command. The only differ
 
 Let's say we have created a package called util that resides at `$GOPATH/src/util`.
 
-```
+```shell
 $ cd $GOPATH/src/util
 $ cat main.go   # file name is arbitrary and doesn't make any significance to Go
 package util
@@ -295,13 +295,13 @@ No. And there is no easy workaround either. You'll need to modify Go's toolchain
 
 To get all dependencies for the current package:
 
-```
+```shell
 go get ./...
 ```
 
 To download a particular remote package:
 
-```
+```shell
 go get <package import path>  # see go help packages for details
 
 # for instance,
@@ -310,7 +310,7 @@ go get github.com/user/package
 
 All downloaded packages end up in $GOPATH/src. They are also automatically built and installed in $GOPATH/pkg. You can skip installation by passing -d flag to go get:
 
-```
+```shell
 go get -d github.com/user/package
 ```
 
@@ -324,7 +324,7 @@ They live side by side in your src directory, so there's no distinction in file 
 
 Sure, but you'll need to provided an alias during import so that the package's name is not main.
 
-```
+```go
 import chef "github.com/user/chef"
 ```
 

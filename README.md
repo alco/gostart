@@ -320,7 +320,7 @@ See also [question 12](#faq12) for one example of using multiple workspaces.
 <a name="faq7"/>
 ### 7. Can I create a package outside of $GOPATH? ###
 
-No. You can change your `GOPATH` though, as described in the previous answer. But keep in mind that `$GOPATH` point to a workspace. You packages go into the _src_ directory inside a workspace.
+No. You can change your `GOPATH` though, as described in the previous answer. But keep in mind that `$GOPATH` points to a workspace. You packages go into the _src_ directory inside a workspace.
 
 <a name="faq8"/>
 ### 8. What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###

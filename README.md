@@ -386,6 +386,6 @@ import chef "github.com/user/chef"
 <a name="faq12"/>
 ### 12. What if I don't want to use code hosting domains in my import paths? ###
 
-You can move stuff around inside `$GOPATH/src` after `go get` has downloaded your dependencies. This would go against the Go way though. Also, currently, the only way to distinguish other people's packages from your own is by looking at the directory structure inside your `$GOPATH/src`: remote packages will reside in one of the directories like _github.com_ or _code.google.com_.
+You can move stuff around inside `$GOPATH/src` after `go get` has downloaded your dependencies. This would go against the Go way though. Also, currently, the only fast way to distinguish other people's packages from your own is by looking at the directory structure inside your `$GOPATH/src`: remote packages will reside in one of the directories like _github.com_ or _code.google.com_.
 
 Keeping remote packages in another directory, separate from your own packages, would certainly be great. And it can be emulated by specifying more than one path in `GOPATH`. Running `go get` will always download packages into the first directory listed in `GOPATH`, so you can then create your own packages in the directory which is second on the list of paths in `GOPATH`.

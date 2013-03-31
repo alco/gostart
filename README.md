@@ -143,7 +143,7 @@ $ tree -L 2 $GOPATH
     └── testy
 ```
 
-Each of the subdirectories inside `src` represents a separate package or a command (see [next question](#faq2) describing the difference between packages and commands). Each one will contain at least one _.go_ file and may also have subdirectories of its own.
+Each of the subdirectories inside `src` represents a separate package or a command (see [question 11](#faq11) describing the difference between packages and commands). Each one will contain at least one _.go_ file and may also have subdirectories of its own.
 
 For more information about `GOPATH` and workspace directory structure, run `go help gopath`.
 

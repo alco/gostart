@@ -11,13 +11,15 @@ This document assumes Go version 1.0.3.
   * [3. How do I split my package into multiple files?](#faq3)
   * [4. How do I split my package into multiple subpackages?](#faq4)
   * [5. How do I create a package for others to use (i.e. a non-main package)?](#faq5)
-  * [6. How do I set up multiple workspaces?](#faq6)
-  * [7. Can I create a package outside of $GOPATH?](#faq7)
-  * [8. What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq8)
-  * [9. How do I download remote packages?](#faq9)
-  * [10. How do I distinguish between library packages and main packages?](#faq10)
-  * [11. Can I import commands in my code?](#faq11)
-  * [12. What if I don't want to use code hosting domains in my import paths?](#faq12)
+  * [6. Where did output from running 'go build' and 'go install' go?](#faq6)
+  * [7. How do I set up multiple workspaces?](#faq7)
+  * [8. Can I create a package outside of $GOPATH?](#faq8)
+  * [9. What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq9)
+  * [10. How do I download remote packages?](#faq10)
+  * [11. How do I distinguish between library pachages and main packages?](#faq11)
+  * [12. Does it make sense to keep commands and packages in separate workspaces?](#faq12)
+  * [13. Can I import commands in my code?](#faq13)
+  * [14. What if I don't want to use code hosting domains in my import paths?](#faq14)
 
 <a name="motivation"/>
 ## Motivation ##
@@ -94,7 +96,7 @@ Go tool let's you download remote packages either by passing their import path t
 go get codehosting.com/path/to/package
 ```
 
-The source for the downloaded package will end up in `$GOPATH/src/codehosting.com/path/to/package`. Go tool will also automatically build a static lib and put it in `$GOPATH/pkg/...`. To read more about this, run `go help get` and `go help gopath`. Also, see [question 9](#faq9).
+The source for the downloaded package will end up in `$GOPATH/src/codehosting.com/path/to/package`. Go tool will also automatically build a static lib and put it in `$GOPATH/pkg/...`. To read more about this, run `go help get` and `go help gopath`. Also, see [question 10](#faq10).
 
   [1]: http://golang.org/doc/code.html
   [2]: http://groups.google.com/group/golang-nuts
@@ -323,28 +325,31 @@ In the context of a simple (non-main) package, `go build` is used to verify that
 In our util package, there are two exported functions (`Square` and `Circle`) and one private function (`cube`). The private function is only visible in files that are part of the package. Other packages can only call exported functions.
 
 <a name="faq6"/>
-### 6. How do I set up multiple workspaces? ###
+### 6. Where did output from running 'go build' and 'go install' go? ###
+
+<a name="faq7"/>
+### 7. How do I set up multiple workspaces? ###
 
 Short answer — you don't. Go tool does expect you to work in a single workspace. You can add more than one to your `GOPATH` environment variable, but there's a gotcha: `go get` will always download new packages into the first location listed in `GOPATH`.
 
 So while adding more than one path to `GOPATH` is rarely useful, you might still want to use multiple workspaces. You'll just need to change your `GOPATH` according to the workspace you're currently working in. There's definitely room here for some build tool that automates the bookkeeping.
 
-See also [question 12](#faq12) for one example of using multiple workspaces.
+See also [question 14](#faq14) for one example of using multiple workspaces.
 
-<a name="faq7"/>
-### 7. Can I create a package outside of $GOPATH? ###
+<a name="faq8"/>
+### 8. Can I create a package outside of $GOPATH? ###
 
 No. You can change your `GOPATH` though, as described in the previous answer. But keep in mind that `$GOPATH` points to a workspace. You packages go into the _src_ directory inside a workspace.
 
-<a name="faq8"/>
-### 8. What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###
+<a name="faq9"/>
+### 9. What if I want to hack on some (possibly throw-away) code outside of $GOPATH? ###
 
 If you're not going to import anything outside of standard library or have one level of local imports, then it'll work for you with go tool. If, however, you need to use fully qualified imports, you have to move your code to a workspace or else you'll get problems when trying to `go get` your dependencies and other bad things might also happen.
 
 Workarounds are possible for particular cases and those can be provided by another tool. In general, however, you have to stick to Go's conventions to make it work for you.
 
-<a name="faq9"/>
-### 9. How do I download remote packages? ###
+<a name="faq10"/>
+### 10. How do I download remote packages? ###
 
 To get all dependencies for the current package:
 
@@ -367,15 +372,18 @@ All downloaded packages end up in `$GOPATH/src`. They are also automatically bui
 go get -d github.com/user/package
 ```
 
-<a name="faq10"/>
-### 10. How do I distinguish between library packages and main packages? ###
+<a name="faq11"/>
+### 11. How do I distinguish between library packages and main packages? ###
 
 Both kinds of packages live side by side in your workspace's _src_ directory, so there's no distinction at the file system level. There is a convention to call the former ones simply packages and the latter ones commands. So, if your package's first line reads `package main`, it's a command. Otherwise, it's just called a package.
 
-You may also create separate workspaces for packages and commands if you like, but you'll need to remember to adjust `GOPATH` every time you switch between the two. See also [question 6](#faq6) for more details.
+<a name="faq12"/>
+### 12. Does it make sense to keep commands and packages in separate workspaces? ###
 
-<a name="faq11"/>
-### 11. Can I import commands in my code? ###
+I'd recommend against that. Using multiple workspaces is tricky, you'll need to remember to adjust `GOPATH` every time you switch between them. See also [question 7](#faq7) for more details.
+
+<a name="faq13"/>
+### 13. Can I import commands in my code? ###
 
 Sure, but you'll need to provide an alias during import so that the package's `main` function does not collide with your main function, if you're importing it into a main package.
 
@@ -383,9 +391,11 @@ Sure, but you'll need to provide an alias during import so that the package's `m
 import chef "github.com/user/chef"
 ```
 
-<a name="faq12"/>
-### 12. What if I don't want to use code hosting domains in my import paths? ###
+<a name="faq14"/>
+### 14. What if I don't want to use code hosting domains in my import paths? ###
 
 You can move stuff around inside `$GOPATH/src` after `go get` has downloaded your dependencies. This would go against the Go way though. Also, currently, the only fast way to distinguish other people's packages from your own is by looking at the directory structure inside your `$GOPATH/src`: remote packages will reside in one of the directories like _github.com_ or _code.google.com_.
 
 Keeping remote packages in another directory, separate from your own packages, would certainly be great. And it can be emulated by specifying more than one path in `GOPATH`. Running `go get` will always download packages into the first directory listed in `GOPATH`, so you can then create your own packages in the directory which is second on the list of paths in `GOPATH`.
+
+Using multiple workspaces has its issues though. See [question 7](#faq7) for more details.

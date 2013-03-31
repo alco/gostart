@@ -327,6 +327,14 @@ In our util package, there are two exported functions (`Square` and `Circle`) an
 <a name="faq6"/>
 ### 6. Where did output from running 'go build' and 'go install' go? ###
 
+Those two behave a bit differently depending on whether you're building a command (a main package) or a simple package.
+
+When building a main package, the resulting executable will be placed in the current directory. Running `go install`, on the other hand, will build the source as usual and place the executable in `$GOPATH/bin`. This has also been discussed in the [second question](#faq2).
+
+Running `go build` inside the directory of a simple package does not produce any binary. Building a package this way is used to verify that it compiles cleanly. In order to create a binary from package source, run `go install` inside the package's directory. As discussed in the [previous question](#faq5), this will create an _.a_ file inside `$GOPATH/pkg/<arch>` directory. Go tool will then be able to pick this binary when bulding other packages that import the current one.
+
+See also: `go help build`, `go help gopath`.
+
 <a name="faq7"/>
 ### 7. How do I set up multiple workspaces? ###
 

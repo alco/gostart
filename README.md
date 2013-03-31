@@ -151,6 +151,8 @@ For more information about `GOPATH` and workspace directory structure, run `go h
 
 Navigate to your package's directory and use the go tool to build and run your code.
 
+Let's assume you created a program in `$GOPATH/src/example` directory:
+
 ```shell
 $ cd $GOPATH/src/example
 $ ls
@@ -164,10 +166,22 @@ import "fmt"
 func main() {
     fmt.Println("Hello world!")
 }
+```
 
+The quickest way to run it is using `go run`:
+
+```shell
 $ go run main.go
 Hello world!
+```
 
+If your main package is split into multiple files (see [question 3](#faq3) for details on how to do that), you will need to pass them all as arguments to `go run`.
+
+Soon, however, you'll want to produce a binary from your Go source that you can run as a standalone executable, without using go tool. Use `go build` for that, it will create an executable in the current directory.
+
+You can also run `go install`, it will build the code and place the executable in `$GOPATH/bin`. You might want to add the latter to your `PATH` environment variable to be able to run your Go programs anywhere in the file system.
+
+```shell
 $ go build
 $ ls
 example main.go
@@ -184,7 +198,7 @@ Here we defined a main package which has a `main` function that is the starting 
 
 You can also define packages with other names, those are called simply packages. They are not intended to produce executable programs, but rather be included as part of some command that will provide a main package with a single `main` function defined in it.
 
-See also: `go help build`, `go help install`.
+See also: `go help run`, `go help build`, `go help install`.
 
 
 <a name="faq3"/>

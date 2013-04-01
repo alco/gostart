@@ -4,7 +4,7 @@ This document assumes Go version 1.0.3.
 
 * [Motivation](#motivation)
 * [The Go way](#canonical)
-* [Problems with the current Go way](#problems)
+* [Go tool doesn't do everything](#missing-features)
 * [FAQ](#faq)
   * [1. How do I start writing Go code?](#faq1)
   * [2. I've written some code. How do I run it?](#faq2)
@@ -20,6 +20,8 @@ This document assumes Go version 1.0.3.
   * [12. Does it make sense to keep commands and packages in separate workspaces?](#faq12)
   * [13. Can I import commands in my code?](#faq13)
   * [14. What if I don't want to use code hosting domains in my import paths?](#faq14)
+  * [15. How do I manage package versions?](#faq15)
+  * [16. How do I freeze packages when deploying?](#faq16)
 
 <a name="motivation"/>
 ## Motivation ##
@@ -422,6 +424,6 @@ Before you get up in arms and race off to write your own package version manager
 
 go tool does not provide any way to create a reproducible environment for fool-proof deployments.
 
-If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment. 
+If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment.
 
 The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment.  Manually.  You might find [goven](https://github.com/kr/goven) useful to automate this.

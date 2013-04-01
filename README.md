@@ -198,7 +198,7 @@ If your main package is split into multiple files (see [question 3](#faq3) for d
 
 Soon, however, you'll want to produce a binary from your Go source that you can run as a standalone executable, without using go tool. Use `go build` for that, it will create an executable in the current directory.
 
-You can also run `go install`, it will build the code and place the executable in `$GOPATH/bin`. You might want to add the latter to your `PATH` environment variable to be able to run your Go programs anywhere in the file system.
+You can also run `go install`, it will build the code and place the executable in `$GOPATH/bin`. You might want to add the latter to your `PATH` environment variable to be able to run your Go programs anywhere in the file system. If you set `GOBIN` environment variable, then results of running `go install` will be placed there.
 
 ```shell
 $ go build
@@ -349,7 +349,7 @@ See also this [wiki page][7], it describes the process of publishing and using r
 
 Those two behave a bit differently depending on whether you're building a command (a main package) or a simple package.
 
-When building a main package, the resulting executable will be placed in the current directory. Running `go install`, on the other hand, will build the source as usual and place the executable in `$GOPATH/bin`. This has also been discussed in the [second question](#faq2).
+When building a main package, the resulting executable will be placed in the current directory. Running `go install`, on the other hand, will build the source as usual and place the executable in `$GOPATH/bin` (unless you have `GOBIN` environment variable set, in which case resulting binary will be placed there). This has also been discussed in the [second question](#faq2).
 
 Running `go build` inside the directory of a simple package does not produce any binary. Building a package this way is used to verify that it compiles cleanly. In order to create a binary from package source, run `go install` inside the package's directory. As discussed in the [previous question](#faq5), this will create an _.a_ file inside `$GOPATH/pkg/<arch>` directory. Go tool will then be able to pick this binary when bulding other packages that import the current one.
 

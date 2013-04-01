@@ -6,6 +6,7 @@ This document assumes Go version 1.0.3.
 * [The Go way](#canonical)
 * [Go tool doesn't do everything](#missing-features)
 * [FAQ](#faq)
+  * [0. What is GOPATH and what do I do with it?](#faq0)
   * [1. How do I start writing Go code?](#faq1)
   * [2. I've written some code. How do I run it?](#faq2)
   * [3. How do I split my package into multiple files?](#faq3)
@@ -22,6 +23,8 @@ This document assumes Go version 1.0.3.
   * [14. What if I don't want to use code hosting domains in my import paths?](#faq14)
   * [15. How do I manage package versions?](#faq15)
   * [16. How do I freeze packages when deploying?](#faq16)
+  * [17. Where can I find more informantion about learning Go?](#faq17)
+  * [18. What is the current state of editor support for Go?](#faq18)
 
 <a name="motivation"/>
 ## Motivation ##
@@ -100,9 +103,6 @@ go get codehosting.com/path/to/package
 
 The source for the downloaded package will end up in `$GOPATH/src/codehosting.com/path/to/package`. Go tool will also automatically build a static lib and put it in `$GOPATH/pkg/...`. To read more about this, run `go help get` and `go help gopath`. Also, see [question 10](#faq10).
 
-  [1]: http://golang.org/doc/code.html
-  [2]: http://groups.google.com/group/golang-nuts
-
 
 <a name="missing-features"/>
 ## Go tool doesn't do everything ##
@@ -117,6 +117,26 @@ Coming from other languages/environments, you may expect that `go` is a full on 
 
 <a name="faq"/>
 ## FAQ ##
+
+<a name="faq0"/>
+### 0. What is GOPATH and what should I do with it? ###
+
+The best way to go about `GOPATH` for a beginner is to set it and forget it. If you're just starting with Go, do this:
+
+1. Install Go.
+2. Choose a directory where you'll be keeping all of your Go code and set `GOPATH` to it, e.g.
+```shell
+# in your .bashrc or similar file
+export GOPATH=$HOME/go
+```
+3. Forget about it. Start every new project inside your `$GOPATH/src` and use the go tool for building, testing, fetching dependencies.
+
+If you'd like to know more about `GOPATH`, it's frequently mentioned throughout this FAQ. Also, take a look at the following resources.
+
+* official [How to Write Go Code][1] guide
+* the `build` package [documentation][3]
+* [GOPATH][4] (community wiki)
+* [Troublingshooting your Go installation][5] (community wiki)
 
 <a name="faq1"/>
 ### 1. How do I start writing Go code? ###
@@ -319,6 +339,9 @@ In the context of a simple (non-main) package, `go build` is used to verify that
 
 In our util package, there are two exported functions (`Square` and `Circle`) and one private function (`cube`). The private function is only visible in files that are part of the package. Other packages can only call exported functions.
 
+See also this [wiki page][7], it describes the process of publishing and using remote packages.
+
+
 <a name="faq6"/>
 ### 6. Where did output from running 'go build' and 'go install' go? ###
 
@@ -429,3 +452,24 @@ go tool does not provide any way to create a reproducible environment for fool-p
 If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment.
 
 The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment.  Manually.  You might find [goven](https://github.com/kr/goven) useful to automate this.
+
+<a name="faq17"/>
+### 17. Where can I find more informantion about learning Go? ###
+
+http://golang.org/doc/
+
+Take a look at this list of official [Go talks][6]. Those are most helpful to start getting into the mindset of a Go programmer. Wish they were mentioned more prominently on the official Go site.
+
+<a name="faq18"/>
+### 18. What is the current state of editor support for Go? ###
+
+See this [wiki page](http://code.google.com/p/go-wiki/wiki/IDEsAndTextEditorPlugins).
+
+
+  [1]: http://golang.org/doc/code.html
+  [2]: http://groups.google.com/group/golang-nuts
+  [3]: http://golang.org/pkg/go/build
+  [4]: http://code.google.com/p/go-wiki/wiki/GOPATH
+  [5]: http://code.google.com/p/go-wiki/wiki/InstallTroubleshooting#Tips
+  [6]: http://code.google.com/p/go-wiki/wiki/GoTalks
+  [7]: http://code.google.com/p/go-wiki/wiki/GithubCodeLayout

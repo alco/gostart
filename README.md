@@ -125,10 +125,12 @@ The best way to go about `GOPATH` for a beginner is to set it and forget it. If 
 
 1. Install Go.
 2. Choose a directory where you'll be keeping all of your Go code and set `GOPATH` to it, e.g.
-```shell
-# in your .bashrc or similar file
-export GOPATH=$HOME/go
-```
+
+    ```shell
+    # in your .bashrc or similar file
+    export GOPATH=$HOME/go
+    ```
+
 3. Forget about it. Start every new project inside your `$GOPATH/src` and use the go tool for building, testing, fetching dependencies.
 
 If you'd like to know more about `GOPATH`, it's frequently mentioned throughout this FAQ. Also, take a look at the following resources.

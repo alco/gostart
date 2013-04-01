@@ -102,23 +102,16 @@ The source for the downloaded package will end up in `$GOPATH/src/codehosting.co
   [2]: http://groups.google.com/group/golang-nuts
 
 
-<a name="problems"/>
-## Problems with the current Go way ##
+<a name="missing-features"/>
+## Go tool doesn't do everything ##
 
-As much as I would like to say that go tool keeps it all simple and keeps you from getting into trouble, the reality proves otherwise. So far, I can come up with the following list of issues that might cause problems for some users:
+Coming from other languages/environments, you may expect that `go` is a full on package management solution.  It isn't!  The following FAQ entries might be useful:
 
-  * no freedom to write go code anywhere in your file system
-  * no support for setting up a reproducible development environment or packaging a locally set up environment
-  * no support for managing dependency versions
-  * URL-ish looking imports in your code
+  * [How do I set up multiple workspaces?](#faq7)
+  * [Can I create a package outside of $GOPATH?](#faq8)
+  * [How do I manage package versions?](#faq15)
+  * [How do I freeze packages when deploying?](#faq16)
 
-To elaborate a bit on the second point, go tool does not provide any way to create a reproducible environment for fool-proof deployments. If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment. The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment. Again, this will have to be done manually. You might find [goven][3] useful in this case.
-
-So, this is the recommended Go way. Of course, you're not obliged to use go tool, you may stick to your favourite Makefiles that invoke Go compiler, linker, etc. directly if that's what works best for you. I only wish I could find a place in the official documentation describing Go's toolchain in detail.
-
-To sum it up, there certainly exists justification for a 3rd party tool that would provide more flexible workflow, automate mundane tasks that are inevitable in practice and solve some of the problems that go tool wasn't designed to deal with.
-
-  [3]: https://github.com/kr/goven
 
 <a name="faq"/>
 ## FAQ ##
@@ -407,3 +400,28 @@ You can move stuff around inside `$GOPATH/src` after `go get` has downloaded you
 Keeping remote packages in another directory, separate from your own packages, would certainly be great. And it can be emulated by specifying more than one path in `GOPATH`. Running `go get` will always download packages into the first directory listed in `GOPATH`, so you can then create your own packages in the directory which is second on the list of paths in `GOPATH`.
 
 Using multiple workspaces has its issues though. See [question 7](#faq7) for more details.
+
+
+<a name="faq15"/>
+### 15. How do I manage package versions? ###
+
+There is no widely adopted solution for package version management, currently.  The go tool has no knowledge of package versions; though it [does choose package versions (vcs tags)](http://golang.org/cmd/go/#hdr-Download_and_install_packages_and_dependencies) based on your current go version.
+
+The currently accepted approach is to build all of your dependencies off of master.  Running `go get -u ./...` to update your locally cached dependencies is _helpful_ to stay out of trouble, though not ideal.
+
+Before you get up in arms and race off to write your own package version manager, be sure to read through discussion of the previous attempts at this:
+
+* [gonuts](https://groups.google.com/d/topic/golang-nuts/cyt-xteBjr8/discussion)
+* [gopkg](https://groups.google.com/d/topic/golang-nuts/-65WPrNcT3U/discussion)
+* [packaging as debs](https://groups.google.com/d/topic/golang-nuts/-UG-lF_Ey-o/discussion)
+* [gopack](https://groups.google.com/d/topic/golang-nuts/c1V9PjKhOz4/discussion)
+
+
+<a name="faq16"/>
+### 16. How do I freeze packages when deploying? ###
+
+go tool does not provide any way to create a reproducible environment for fool-proof deployments.
+
+If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment. 
+
+The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment.  Manually.  You might find [goven](https://github.com/kr/goven) useful to automate this.

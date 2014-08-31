@@ -64,7 +64,7 @@ There is no such thing as local packages in Go. While local imports are possible
 
 Anything you import is relative to your `$GOPATH/src`. Thus, if you have a directory structure like the following one:
 
-```shell
+```sh
 .
 └── src
     └── gopher
@@ -97,7 +97,7 @@ func main() {
 
 Go tool let's you download remote packages either by passing their import path to `go get` or calling `go get ./...` inside your project's directory to recursively get all remote dependencies.
 
-```shell
+```sh
 go get codehosting.com/path/to/package
 ```
 
@@ -126,7 +126,7 @@ The best way to go about `GOPATH` for a beginner is to set it and forget it. If 
 1. Install Go.
 2. Choose a directory where you'll be keeping all of your Go code and set `GOPATH` to it, e.g.
 
-    ```shell
+    ```sh
     # in your .bashrc or similar file
     export GOPATH=$HOME/go
     ```
@@ -145,13 +145,13 @@ If you'd like to know more about `GOPATH`, it's frequently mentioned throughout 
 
 Before you start any coding, you should pick a directory that will become your Go workspace. All your Go code will reside there. Set the `GOPATH` environment variable to the path to that directory in your .bashrc or similar file for the shell you're using.
 
-```shell
+```sh
 export GOPATH=/Users/alco/go
 ```
 
 You'll also need to create a subdirectory named `src` inside your `$GOPATH`, this is where you'll be keeping your Go packages and commands. Here's what your initial directory structure is going to look like:
 
-```shell
+```sh
 $ tree -L 2 $GOPATH
 /Users/alco/go
 └── src
@@ -172,7 +172,7 @@ Navigate to your package's directory and use the go tool to build and run your c
 
 Let's assume you created a program in `$GOPATH/src/example` directory:
 
-```shell
+```sh
 $ cd $GOPATH/src/example
 $ ls
 main.go
@@ -189,7 +189,7 @@ func main() {
 
 The quickest way to run it is using `go run`:
 
-```shell
+```sh
 $ go run main.go
 Hello world!
 ```
@@ -200,7 +200,7 @@ Soon, however, you'll want to produce a binary from your Go source that you can 
 
 You can also run `go install`, it will build the code and place the executable in `$GOPATH/bin`. You might want to add the latter to your `PATH` environment variable to be able to run your Go programs anywhere in the file system. If you set `GOBIN` environment variable, then results of running `go install` will be placed there.
 
-```shell
+```sh
 $ go build
 $ ls
 example main.go
@@ -227,7 +227,7 @@ Go treats files in a single directory as belonging to one package as long as the
 
 Let's continue working on our example command. We'll add a second file named _helper.go_ and define a helper function in it.
 
-```shell
+```sh
 $ cd $GOPATH/src/example
 $ cat helper.go
 package main
@@ -245,7 +245,7 @@ func main() {
 
 Now we cannot simply `go run main.go` because _main.go_ calls a function defined in another file. We can either pass all files as arguments to go run or build the current package and then run the produced binary.
 
-```shell
+```sh
 $ go run main.go
 # command-line-arguments
 ./main.go:6: undefined: privateHelperFunc
@@ -272,7 +272,7 @@ Subpackages are just separate packages that happen to reside in another package'
 
 Let's create a subdirectory in our example project called _math_ and create a file there named _math.go_.
 
-```shell
+```sh
 $ cat math/math.go
 package math
 
@@ -283,7 +283,7 @@ func Mul2(x int) int {
 
 Let's also edit _main.go_ to call Mul2().
 
-```shell
+```sh
 $ cat main.go
 package main
 
@@ -314,7 +314,7 @@ You create a package the same way as you would create a command. The only differ
 
 Let's say we have created a package called _util_ that resides in `$GOPATH/src/util`.
 
-```shell
+```sh
 $ cd $GOPATH/src/util
 $ cat main.go   # file name is arbitrary and doesn't make any significance to Go
 package util
@@ -381,13 +381,13 @@ Workarounds are possible for particular cases and those can be provided by anoth
 
 To get all dependencies for the current package:
 
-```shell
+```sh
 go get ./...
 ```
 
 To download a particular remote package:
 
-```shell
+```sh
 go get <package import path>  # see 'go help packages' for details
 
 # for instance,
@@ -396,7 +396,7 @@ go get github.com/user/package
 
 All downloaded packages end up in `$GOPATH/src`. They are also automatically built and installed into `$GOPATH/pkg`. You can skip installation by passing `-d` flag to `go get`:
 
-```shell
+```sh
 go get -d github.com/user/package
 ```
 

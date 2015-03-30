@@ -453,7 +453,7 @@ go tool does not provide any way to create a reproducible environment for fool-p
 
 If you tested your code locally, you can never be sure that it'll work during your next deploy, because one of the dependencies might introduce a breaking change during the time period between your testing and deployment.
 
-The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment.  Manually.  You might find [goven](https://github.com/kr/goven) useful to automate this.
+The only apparent solution to this is to package up your downloaded dependencies and copy them over to your production environment.  Manually.  You might find [godep](https://github.com/tools/godep) useful to automate this.
 
 <a name="faq17"/>
 ### 17. Where can I find more informantion about learning Go? ###

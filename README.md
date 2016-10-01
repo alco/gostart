@@ -107,7 +107,7 @@ The source for the downloaded package will end up in `$GOPATH/src/codehosting.co
 <a name="missing-features"/>
 ## Go tool doesn't do everything ##
 
-Coming from other languages/environments, you may expect that `go` is a full on package management solution.  It isn't!  The following FAQ entries might be useful:
+Coming from other languages/environments, you may expect that `go` is a full package management solution.  It isn't!  The following FAQ entries might be useful:
 
   * [How do I set up multiple workspaces?](#faq7)
   * [Can I create a package outside of $GOPATH?](#faq8)

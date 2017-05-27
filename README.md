@@ -228,6 +228,7 @@ See also: `go help run`, `go help build`, `go help install`.
 
 
 <a name="faq3"/>
+
 ### 3. How do I split my package into multiple files?
 
 Go treats files in a single directory as belonging to one package as long as they all have the same name in their `package` declarations.
@@ -273,6 +274,7 @@ Finally, you can also split any other package into multiple files, not just the 
 
 
 <a name="faq4"/>
+
 ### 4. How do I split my package into multiple subpackages?
 
 Subpackages are just separate packages that happen to reside in another package's directory. Go doesn't treat them in any special way, so import paths for subpackages are relative to your `$GOPATH/src`. Use a subpackage only when its functionality is tied to the main package which contains it and when it doesn't make sense to put that package on one level with other top-level packages.
@@ -311,6 +313,7 @@ Note that if you were to replace `package math` in _math.go_ with `package main`
 
 
 <a name="faq5"/>
+
 ### 5. How do I create a package for others to use (i.e. a non-main package)?
 
 In the previous questions we were mainly looking at writing so called commands — packages that declare `package main` and are meant to be built to produce an executable binary.

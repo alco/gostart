@@ -17,7 +17,7 @@ This document assumes Go version 1.0.3.
   * [8. Can I create a package outside of $GOPATH?](#faq8)
   * [9. What if I want to hack on some (possibly throw-away) code outside of $GOPATH?](#faq9)
   * [10. How do I download remote packages?](#faq10)
-  * [11. How do I distinguish between library pachages and main packages?](#faq11)
+  * [11. How do I distinguish between library packages and main packages?](#faq11)
   * [12. Does it make sense to keep commands and packages in separate workspaces?](#faq12)
   * [13. Can I import commands in my code?](#faq13)
   * [14. What if I don't want to use code hosting domains in my import paths?](#faq14)

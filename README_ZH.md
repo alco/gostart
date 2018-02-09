@@ -1,11 +1,4 @@
 # gostart
-[![Build Status](https://travis-ci.org/yangwenmai/gostart.svg?branch=master)](https://travis-ci.org/yangwenmai/gostart) [![Go Report Card](https://goreportcard.com/badge/github.com/yangwenmai/gostart)](https://goreportcard.com/report/github.com/yangwenmai/gostart)  [![Documentation](https://godoc.org/github.com/yangwenmai/gostart?status.svg)](http://godoc.org/github.com/yangwenmai/gostart) [![Coverage Status](https://coveralls.io/repos/github/yangwenmai/gostart/badge.svg?branch=master)](https://coveralls.io/github/yangwenmai/gostart?branch=master) [![GitHub issues](https://img.shields.io/github/issues/yangwenmai/gostart.svg)](https://github.com/yangwenmai/gostart/issues) [![license](https://img.shields.io/github/license/yangwenmai/gostart.svg)](https://github.com/yangwenmai/gostart/blob/master/LICENSE) [![Release](https://img.shields.io/github/release/yangwenmai/gostart.svg?label=Release)](https://github.com/yangwenmai/gostart/releases) [![star this repo](http://githubbadges.com/star.svg?user=yangwenmai&repo=gostart)](http://github.com/yangwenmai/gostart) [![fork this repo](http://githubbadges.com/fork.svg?user=yangwenmai&repo=gostart)](http://github.com/yangwenmai/gostart/fork)
-
-[简体中文](https://github.com/yangwenmai/gostart/blob/master/README_ZH.md)
-
-## Stargazers over time
-
-[![Stargazers over time](https://starcharts.herokuapp.com/yangwenmai/gostart.svg)](https://starcharts.herokuapp.com/yangwenmai/gostart)
 
 ## 目录 ##
 

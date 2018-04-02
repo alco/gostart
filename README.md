@@ -362,7 +362,7 @@ Those two behave a bit differently depending on whether you're building a comman
 
 When building a main package, the resulting executable will be placed in the current directory. Running `go install`, on the other hand, will build the source as usual and place the executable in `$GOPATH/bin` (unless you have `GOBIN` environment variable set, in which case resulting binary will be placed there). This has also been discussed in the [second question](#faq2).
 
-Running `go build` inside the directory of a simple package does not produce any binary. Building a package this way is used to verify that it compiles cleanly. In order to create a binary from package source, run `go install` inside the package's directory. As discussed in the [previous question](#faq5), this will create an _.a_ file inside `$GOPATH/pkg/<arch>` directory. Go tool will then be able to pick this binary when bulding other packages that import the current one.
+Running `go build` inside the directory of a simple package does not produce any binary. Building a package this way is used to verify that it compiles cleanly. In order to create a binary from package source, run `go install` inside the package's directory. As discussed in the [previous question](#faq5), this will create an _.a_ file inside `$GOPATH/pkg/<arch>` directory. Go tool will then be able to pick this binary when building other packages that import the current one.
 
 See also: `go help build`, `go help gopath`.
 

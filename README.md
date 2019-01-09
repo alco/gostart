@@ -23,7 +23,7 @@ This document assumes Go version 1.0.3.
   * [14. What if I don't want to use code hosting domains in my import paths?](#faq14)
   * [15. How do I manage package versions?](#faq15)
   * [16. How do I freeze packages when deploying?](#faq16)
-  * [17. Where can I find more informantion about learning Go?](#faq17)
+  * [17. Where can I find more information about learning Go?](#faq17)
   * [18. What is the current state of editor support for Go?](#faq18)
 
 <a name="motivation"/>
@@ -478,7 +478,7 @@ Use [dep](https://github.com/golang/dep) to manage and lock your dependencies. I
 
 <a name="faq17"/>
 
-### 17. Where can I find more informantion about learning Go?
+### 17. Where can I find more information about learning Go?
 
 http://golang.org/doc/
 

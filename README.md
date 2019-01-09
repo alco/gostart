@@ -97,7 +97,7 @@ func main() {
 }
 ```
 
-Go tool let's you download remote packages either by passing their import path to `go get` or calling `go get ./...` inside your project's directory to recursively get all remote dependencies.
+Go tool let you download remote packages either by passing their import path to `go get` or calling `go get ./...` inside your project's directory to recursively get all remote dependencies.
 
 ```sh
 go get codehosting.com/path/to/package
@@ -166,7 +166,7 @@ $ tree -L 2 $GOPATH
     └── testy
 ```
 
-Each of the subdirectories inside `src` represents a separate package or a command (see [question 11](#faq11) describing the difference between packages and commands). Each one will contain at least one _.go_ file and may also have subdirectories of its own.
+Each of the subdirectories inside `src` represents a separate package or a command (see [question 11)](#faq11) describing the difference between packages and commands). Each one will contain at least one _.go_ file and may also have subdirectories of its own.
 
 For more information about `GOPATH` and workspace directory structure, run `go help gopath`.
 
@@ -205,7 +205,7 @@ If your main package is split into multiple files (see [question 3](#faq3) for d
 
 Soon, however, you'll want to produce a binary from your Go source that you can run as a standalone executable, without using go tool. Use `go build` for that, it will create an executable in the current directory.
 
-You can also run `go install`, it will build the code and place the executable in `$GOPATH/bin`. You might want to add the latter to your `PATH` environment variable to be able to run your Go programs anywhere in the file system. If you set `GOBIN` environment variable, then results of running `go install` will be placed there.
+You can also run `go install`, it will build the code and place the executable in `$GOPATH/bin`. You might want to add the letter to your `PATH` environment variable to be able to run your Go programs anywhere in the file system. If you set `GOBIN` environment variable, then results of running `go install` will be placed there.
 
 ```sh
 $ go build

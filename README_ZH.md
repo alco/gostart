@@ -54,7 +54,7 @@
 
 ### 2. Go 工具不允许你依赖于特定版本的外部软件包
 
-如果你确实需要一个特定版本的特定软件包，你需要把这个软件包分叉出来，然后按照你想要的特定版本进行检查。如果你需要使用丹哥软件包的不同版本，则需要为每个版本创建一个单独的分支。
+如果你确实需要一个特定版本的特定软件包，你需要把这个软件包分叉出来，然后按照你想要的特定版本进行检查。如果你需要使用单个软件包的不同版本，则需要为每个版本创建一个单独的分支。
 
 很显然，一旦你需要给定的软件包不止一个版本，这种方法就不会缩小和变得单调乏味。Go 背后的推理是版本控制非常困难，以至于你的依赖关系应该更好的在你的最新版本和最新版本的各自依赖关系上递归的工作。虽然这是一个很好的建议，但在实践中通常是不可能的。你将需要依赖你的直接依赖项的具体版本或依赖项的依赖项等。
 
@@ -483,10 +483,10 @@ go 工具不提供任何方法来创建一个傻瓜式部署的可重现环境�
 
 看这个 [wiki page](http://code.google.com/p/go-wiki/wiki/IDEsAndTextEditorPlugins).
 
-  [1]: http://golang.org/doc/code.html
-  [2]: http://groups.google.com/group/golang-nuts
-  [3]: http://golang.org/pkg/go/build
-  [4]: http://code.google.com/p/go-wiki/wiki/GOPATH
-  [5]: http://code.google.com/p/go-wiki/wiki/InstallTroubleshooting#Tips
-  [6]: http://code.google.com/p/go-wiki/wiki/GoTalks
-  [7]: http://code.google.com/p/go-wiki/wiki/GithubCodeLayout
+[1]: http://golang.org/doc/code.html
+[2]: http://groups.google.com/group/golang-nuts
+[3]: http://golang.org/pkg/go/build
+[4]: http://code.google.com/p/go-wiki/wiki/GOPATH
+[5]: http://code.google.com/p/go-wiki/wiki/InstallTroubleshooting#Tips
+[6]: http://code.google.com/p/go-wiki/wiki/GoTalks
+[7]: http://code.google.com/p/go-wiki/wiki/GithubCodeLayout
